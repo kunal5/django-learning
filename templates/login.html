@@ -7,7 +7,15 @@
 <form method="post">
         <!--for security concerns, namely to prevent a XSS Attack-->
   {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
+    {% if wrong_user %}
+      <p>There is no account with this username!!!!</p>
+        <p>Enter a valid username or password. If you dont have an account please <a href="{% url 'signup' %}">Sign Up</a> to continue</p>
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    {% else %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+        <p>If you dont have an account <a href="{% url 'signup' %}">Sign Up</a></p>
+    {% endif %}
 </form>
 {% endblock %}
