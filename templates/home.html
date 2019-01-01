@@ -6,11 +6,14 @@
 {% block content %}
   {% csrf_token %}
 
-{% if user %}
+{% ifnotequal user|stringformat:"s" "AnonymousUser" %}
+
   Hi {{ user }}!
+  {{ form.as_p }}
+  <button type="submit">Search</button>
   <p><a href="{% url 'login' %}">logout</a></p>
 {% else %}
   <p>You are not logged in</p>
   <a href="{% url 'login' %}">login</a>
-{% endif %}
+{% endifnotequal %}
 {% endblock %}
